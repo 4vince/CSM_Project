@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bisection Method Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bisection Method Calculator</h1>
+            <p>Find roots of polynomials using the Bisection Method</p>
+        </header>
+
+        <div class="input-section">
+            <h2>Polynomial Input</h2>
+            <div class="form-group">
+                <label for="degree">Polynomial Degree (max 20):</label>
+                <input type="number" id="degree" min="0" max="20" value="3">
+                <button onclick="createCoefficientInputs()">Set Degree</button>
+            </div>
+            
+            <div id="coefficients-container">
+                <!-- Dynamic coefficient inputs will appear here -->
+            </div>
+        </div>
+
+        <div class="bounds-section">
+            <h2>Bounds and Tolerance</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="x_lower">Lower Bound (x_lower):</label>
+                    <input type="number" id="x_lower" step="any" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="x_upper">Upper Bound (x_upper):</label>
+                    <input type="number" id="x_upper" step="any" value="3">
+                </div>
+                <div class="form-group">
+                    <label for="tolerance">Tolerance (%):</label>
+                    <input type="number" id="tolerance" step="0.001" min="0.001" max="99.999" value="0.1">
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button onclick="solveBisection()" class="solve-btn">Solve</button>
+            <button onclick="clearAll()" class="clear-btn">Clear</button>
+        </div>
+
+        <div id="results" class="results-section" style="display: none;">
+            <h2>Results</h2>
+            <div id="iteration-table"></div>
+            <div id="final-result"></div>
+            <div id="plot-container"></div>
+        </div>
+
+        <div id="error" class="error-message" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
