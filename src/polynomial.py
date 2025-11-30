@@ -1,7 +1,6 @@
 """
 Polynomial class for representing and evaluating polynomials
 """
-import numpy as np
 
 class Polynomial:
     def __init__(self, degree, coefficients):
@@ -34,15 +33,3 @@ class Polynomial:
             terms[0] = terms[0][1:]
         
         return "f(x) = " + " ".join(terms) if terms else "f(x) = 0"
-    
-    def get_derivative(self):
-        """Return the derivative of the polynomial"""
-        if self.degree == 0:
-            return Polynomial(0, [0])
-        
-        derivative_coeffs = []
-        for i, coeff in enumerate(self.coefficients[:-1]):  # Exclude constant term
-            power = self.degree - i
-            derivative_coeffs.append(coeff * power)
-        
-        return Polynomial(self.degree - 1, derivative_coeffs)

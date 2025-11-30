@@ -1,8 +1,6 @@
 """
 Main application for Bisection Method Calculator
 """
-from bisection_method import BisectionMethod
-from polynomial import Polynomial
 
 def display_welcome():
     print("=" * 60)
@@ -12,7 +10,7 @@ def display_welcome():
     print()
 
 def get_polynomial_input():
-    """Get polynomial input from user"""
+    """Get polynomial input from user""" 
     print("=== Polynomial Input ===")
     
     while True:
@@ -45,6 +43,7 @@ def get_polynomial_input():
             except ValueError:
                 print("Please enter a valid integer")
     
+    from polynomial import Polynomial
     return Polynomial(degree, coefficients)
 
 def get_bounds_input():
@@ -112,11 +111,16 @@ def main():
             tolerance = get_tolerance_input()
             
             # Solve using bisection method
+            from bisection_method import BisectionMethod
             bisection = BisectionMethod(poly)
             print(f"\nSolving using Bisection Method...")
             print(f"Target relative error: {tolerance}%")
             
             result = bisection.solve(x_lower, x_upper, tolerance)
+            
+            if 'error' in result:
+                print(f"Error: {result['error']}")
+                continue
             
             # Display results
             print("\n" + "=" * 60)

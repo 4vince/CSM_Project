@@ -1,8 +1,6 @@
 """
 Bisection Method implementation for finding roots of polynomials
 """
-import numpy as np
-import matplotlib.pyplot as plt
 
 class BisectionMethod:
     def __init__(self, polynomial):
@@ -12,15 +10,6 @@ class BisectionMethod:
     def solve(self, x_lower, x_upper, tolerance, max_iterations=100):
         """
         Solve the polynomial using Bisection Method
-        
-        Parameters:
-        x_lower: Lower bound
-        x_upper: Upper bound
-        tolerance: Stopping criterion (relative error %)
-        max_iterations: Maximum number of iterations
-        
-        Returns:
-        Dictionary containing the solution and iteration data
         """
         # Validate inputs
         if x_lower >= x_upper:
@@ -38,7 +27,7 @@ class BisectionMethod:
         self.iterations_data = []
         iteration = 0
         prev_midpoint = None
-        relative_error = 100  # Start with 100% error
+        relative_error = 100
         
         print(f"\n{'Iteration':<10} {'x_lower':<12} {'f(x_lower)':<12} {'x_upper':<12} {'f(x_upper)':<12} {'midpoint':<12} {'f(midpoint)':<12} {'Error %':<12}")
         print("-" * 100)
@@ -48,7 +37,7 @@ class BisectionMethod:
             f_midpoint = self.polynomial.evaluate(midpoint)
             
             # Calculate relative error
-            if prev_midpoint is not None and prev_midpoint != 0:
+            if prev_midpoint is not None and abs(prev_midpoint) > 1e-12:
                 relative_error = abs((midpoint - prev_midpoint) / midpoint) * 100
             else:
                 relative_error = 100
@@ -70,7 +59,7 @@ class BisectionMethod:
             print(f"{iteration+1:<10} {x_lower:<12.6f} {f_lower:<12.6f} {x_upper:<12.6f} {f_upper:<12.6f} {midpoint:<12.6f} {f_midpoint:<12.6f} {relative_error:<12.6f}")
             
             # Check for root found exactly
-            if abs(f_midpoint) < 1e-12:  # Very close to zero
+            if abs(f_midpoint) < 1e-12:
                 break
             
             # Update bounds
@@ -94,42 +83,43 @@ class BisectionMethod:
     
     def plot_function(self, x_lower, x_upper, root=None):
         """Plot the polynomial function and mark the root if found"""
-        # Create a range of x values
-        x_min = min(x_lower, x_upper) - 1
-        x_max = max(x_lower, x_upper) + 1
-        x = np.linspace(x_min, x_max, 400)
-        y = [self.polynomial.evaluate(xi) for xi in x]
-        
-        plt.figure(figsize=(12, 8))
-        
-        # Plot the function
-        plt.plot(x, y, 'b-', linewidth=2, label=str(self.polynomial))
-        plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
-        plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
-        
-        # Mark the initial bounds
-        plt.axvline(x=x_lower, color='g', linestyle='--', alpha=0.7, label=f'Initial lower bound: {x_lower}')
-        plt.axvline(x=x_upper, color='r', linestyle='--', alpha=0.7, label=f'Initial upper bound: {x_upper}')
-        
-        # Mark the root if found
-        if root is not None:
-            plt.plot(root, self.polynomial.evaluate(root), 'ro', markersize=8, 
-                    label=f'Root: {root:.6f}')
-        
-        plt.xlabel('x')
-        plt.ylabel('f(x)')
-        plt.title('Bisection Method - Function Plot')
-        plt.grid(True, alpha=0.3)
-        plt.legend()
-        plt.tight_layout()
-        plt.show()
+        try:
+            import matplotlib.pyplot as plt
+            import numpy as np
+            
+            # Create a range of x values
+            x_min = min(x_lower, x_upper) - 1
+            x_max = max(x_lower, x_upper) + 1
+            x = np.linspace(x_min, x_max, 400)
+            y = [self.polynomial.evaluate(xi) for xi in x]
+            
+            plt.figure(figsize=(12, 8))
+            
+            # Plot the function
+            plt.plot(x, y, 'b-', linewidth=2, label=str(self.polynomial))
+            plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
+            plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
+            
+            # Mark the initial bounds
+            plt.axvline(x=x_lower, color='g', linestyle='--', alpha=0.7, label=f'Initial lower bound: {x_lower:.4f}')
+            plt.axvline(x=x_upper, color='r', linestyle='--', alpha=0.7, label=f'Initial upper bound: {x_upper:.4f}')
+            
+            # Mark the root if found
+            if root is not None:
+                plt.plot(root, self.polynomial.evaluate(root), 'ro', markersize=8, 
+                        label=f'Root: {root:.6f}')
+            
+            plt.xlabel('x')
+            plt.ylabel('f(x)')
+            plt.title('Bisection Method - Function Plot')
+            plt.grid(True, alpha=0.3)
+            plt.legend()
+            plt.tight_layout()
+            plt.show()
+            
+        except ImportError:
+            print("Matplotlib is not installed. Cannot display plot.")
+            print("Install it using: pip install matplotlib")
     
     def get_iteration_count(self):
-        """Get the number of iterations performed"""
         return len(self.iterations_data)
-    
-    def get_iteration_data(self, iteration):
-        """Get data for a specific iteration"""
-        if 0 <= iteration - 1 < len(self.iterations_data):
-            return self.iterations_data[iteration - 1]
-        return None
