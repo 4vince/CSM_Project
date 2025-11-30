@@ -10,7 +10,7 @@ def display_welcome():
     print()
 
 def get_polynomial_input():
-    """Get polynomial input from user""" 
+    """Get polynomial input from user"""
     print("=== Polynomial Input ===")
     
     while True:
@@ -46,8 +46,8 @@ def get_polynomial_input():
     from polynomial import Polynomial
     return Polynomial(degree, coefficients)
 
-def get_bounds_input():
-    """Get bounds input from user"""
+def get_valid_bounds(polynomial):
+    """Get bounds input from user with validation for opposite signs"""
     print("\n=== Bounds Input ===")
     
     while True:
@@ -56,15 +56,41 @@ def get_bounds_input():
             x_upper = float(input("Enter upper bound (x_upper): "))
             
             if x_lower >= x_upper:
-                print("Lower bound must be less than upper bound")
+                print("Error: Lower bound must be less than upper bound")
+                print("Please try again.\n")
                 continue
             
-            break
+            # Check if function values have opposite signs
+            f_lower = polynomial.evaluate(x_lower)
+            f_upper = polynomial.evaluate(x_upper)
+            
+            print(f"f({x_lower}) = {f_lower:.6f}")
+            print(f"f({x_upper}) = {f_upper:.6f}")
+            
+            # Check if either bound is exactly a root
+            if f_lower == 0:
+                print(f"Note: Lower bound x = {x_lower} is already a root!")
+                print("The bisection method requires bounds with opposite signs.")
+                print("Please choose bounds that bracket an unknown root.\n")
+                continue
+            elif f_upper == 0:
+                print(f"Note: Upper bound x = {x_upper} is already a root!")
+                print("The bisection method requires bounds with opposite signs.")
+                print("Please choose bounds that bracket an unknown root.\n")
+                continue
+            
+            # Check for proper opposite signs
+            if f_lower * f_upper > 0:
+                print("Error: f(x_lower) and f(x_upper) have the same sign.")
+                print("The bisection method requires opposite signs at the bounds.")
+                print("Please choose different bounds.\n")
+                continue
+            else:
+                return x_lower, x_upper
+            
         except ValueError:
             print("Please enter valid numbers")
-    
-    return x_lower, x_upper
-
+            
 def get_tolerance_input():
     """Get stopping criterion input from user"""
     print("\n=== Stopping Criterion ===")
@@ -93,19 +119,8 @@ def main():
             poly = get_polynomial_input()
             print(f"\nYour polynomial: {poly}")
             
-            # Get bounds
-            x_lower, x_upper = get_bounds_input()
-            
-            # Validate bounds
-            f_lower = poly.evaluate(x_lower)
-            f_upper = poly.evaluate(x_upper)
-            print(f"\nf({x_lower}) = {f_lower:.6f}")
-            print(f"f({x_upper}) = {f_upper:.6f}")
-            
-            if f_lower * f_upper > 0:
-                print("Error: f(x_lower) and f(x_upper) have the same sign.")
-                print("The bisection method requires opposite signs at the bounds.")
-                continue
+            # Get bounds with validation (now returns only 2 values)
+            x_lower, x_upper = get_valid_bounds(poly)
             
             # Get tolerance
             tolerance = get_tolerance_input()
