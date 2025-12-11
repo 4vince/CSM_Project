@@ -1,19 +1,22 @@
 # Bisection Method Calculator - Setup Guide
 
-This guide will help you set up and run the Bisection Method Calculator application.
+This guide will help you set up and run the **Bisection Method Calculator application**, a simple tool for finding the roots of polynomial equations using the Bisection Method. No prior experience is required—just follow the steps below.
+
+---
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
 - **Python 3.7 or higher**
-- **pip** (Python package manager)
+- **pip** (Python package manager) which comes with python
 - **Web browser** (Chrome, Firefox, Edge, etc.)
 
-## Quick Setup
+---
 
-### Step 1: Check Your Project Structure
-Ensure your project has this structure:
+## Project Structure
+Your project folder should look like this:
+```
 CSM_Project/
 ├── src/
 │ ├── main.py
@@ -31,28 +34,14 @@ CSM_Project/
 
 
 ### Step 2: Install Dependencies
-First Install Python from the official page https://www.python.org/downloads/
-Then
 Open terminal/command prompt and run:
 # Install required Python packages
-python -m pip install flask flask-cors numpy matplotlib
+pip install flask flask-cors numpy matplotlib
 
-### Step 3: Run the Application
+### Step 2: Start the Web Application
 If you extracted the files in you chosen directory for example : C:\Users\ravon\Documents\CSM_Project\
 
-# Navigate to the backend directory and copy the directory 
-then tyoe: cd (directory)
-example: cd C:\Users\ravon\Documents\CSM_Project\backend
-
-# Start the web server
-python app.py
-
-### Step 4: Access the Application
-Open your web browser and go to:
-http://localhost:5000
-
-### To close the application 
-exit the command prompt 
+There are 2 ways you can start the web application:
 
 ### Methods of Using the Application
 
@@ -63,14 +52,35 @@ exit the command prompt
 4. Specify tolerance (relative error %)
 5. Click "Solve" to see results and plot
 
-### To close the application 
-exit the command prompt 
+You will see:
+- The approximate root
+- A table showing each iteration
+- A graph of the function and the root
 
 ### Method 2: Command Line Interface
-# Navigate to src directory
-cd src
-example: cd C:\Users\ravon\Documents\CSM_Project\src
+1. Open a terminal window
+2. Navigate to the project folder:
+```bash
+cd C:\Users\ravon\Documents\CSM_Project\backend
+```
+3. Start the server:
+```bash
+python app.py
+```
+If successful, the terminal will show that the server is runnig.
 
-# Run the CLI version
-python main.py
+### Step 3: Open the Calculator
+In your browser, go to:
+```bash
+http://localhost:5000
+```
+To stop the server lator, press:
+```bash
+CTRL + C
+```
+Or just close the terminal.
+
+---
+
+
 
