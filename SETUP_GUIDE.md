@@ -31,9 +31,11 @@ CSM_Project/
 
 
 ### Step 2: Install Dependencies
+First Install Python from the official page https://www.python.org/downloads/
+Then
 Open terminal/command prompt and run:
 # Install required Python packages
-pip install flask flask-cors numpy matplotlib
+python -m pip install flask flask-cors numpy matplotlib
 
 ### Step 3: Run the Application
 If you extracted the files in you chosen directory for example : C:\Users\ravon\Documents\CSM_Project\
